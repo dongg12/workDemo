@@ -1,4 +1,4 @@
-package cn.wd.work;
+package cn.wd.work.comparator;
 
 import cn.wd.common.entity.FieldChangeEntity;
 import lombok.Data;
@@ -7,6 +7,9 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * 实体类比较
+ */
 public class EntityComparator {
 
     public static List<FieldChangeEntity> compareEntities(Object oldEntity, Object newEntity) throws IllegalAccessException {
@@ -106,12 +109,16 @@ public class EntityComparator {
     public static void main(String[] args) {
         try {
             User user1 = new User();
-            user1.setId("1");
+            user1.setId("2");
             user1.setName("Alice");
             user1.setAge(30);
             user1.setEmail("alice@example.com");
             user1.setRoles(Arrays.asList("admin", "user"));
             user1.setAddresses(new Address[]{new Address("123 Main St"), new Address("456 Elm St")});
+            Person p1 = new Person();
+            p1.setAge(12);
+            p1.setName("wd");
+            user1.setPerson(p1);
 
             User user2 = new User();
             user2.setId("1");
@@ -120,6 +127,10 @@ public class EntityComparator {
             user2.setEmail("alice.smith@example.com");
             user2.setRoles(Arrays.asList("admin", "editor"));
             user2.setAddresses(new Address[]{new Address("123 Main St"), new Address("789 Oak St")});
+            Person p2 = new Person();
+            p2.setAge(13);
+            p2.setName("cy");
+            user2.setPerson(p2);
 
             List<FieldChangeEntity> changes = compareEntities(user1, user2);
             for (FieldChangeEntity entry : changes) {
@@ -132,13 +143,20 @@ public class EntityComparator {
 }
 
 @Data
+class Person {
+    private String name;
+    private Integer age;
+}
+
+@Data
 class User {
     private String id;
     private String name;
-    private int age;
+    private Integer age;
     private String email;
     private List<String> roles;
     private Address[] addresses;
+    private Person person;
 
     @Override
     public String toString() {
