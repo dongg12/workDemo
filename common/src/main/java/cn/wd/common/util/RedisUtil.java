@@ -2,7 +2,6 @@ package cn.wd.common.util;
 
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
